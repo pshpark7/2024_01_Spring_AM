@@ -1,4 +1,5 @@
-package com.example.demo.controller;
+package com.example.demo.vo;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Article {
-	public Article(int i, String string) {
-		int id;
-		String name;
-
-	}
+	int id;
+	String title;
+	String body;
 }
