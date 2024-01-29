@@ -55,12 +55,26 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {
-		Article foundarticle = articles.get(id - 1);
-		if (foundarticle == null) {
+		Article article = getArticle(id);
+		if (article == null) {
 			return String.format("%d번 글은 없습니다.", id);
 		}
-		articles.remove(id - 1);
+		deleteArticle(id);
 		return String.format("%d번 글이 삭제되었습니다", id);
+	}
+
+	private void deleteArticle(int id) {
+		Article article = getArticle(id);
+		articles.remove(article);
+	}
+
+	private Article getArticle(int id) {
+		for (Article article : articles) {
+			if(article.getId() == id) {
+				return article;
+			}
+		}
+		return null;
 	}
 
 	@RequestMapping("/usr/article/doModify")
