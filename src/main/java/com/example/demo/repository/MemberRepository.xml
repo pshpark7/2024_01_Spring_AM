@@ -6,8 +6,8 @@
 	
 	<select id="getMember" resultType="Member">
 		SELECT * 
-		FROM `member
-		WHERE loginId = #{loginId}
+		FROM `member`
+		WHERE id = #{id}
 	</select>
 	
 	

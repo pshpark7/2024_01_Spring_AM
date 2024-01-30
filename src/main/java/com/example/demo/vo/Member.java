@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
-	int id;
-	String regDate;
-	String updateDate;
-	String loginId;
-	String loginPw;
-	String name;
-	String nickname;
-	int cellphoneNum;
-	String email;
+	private int id;
+	private String regDate;
+	private String updateDate;
+	private String loginId;
+	private String loginPw;
+	private String name;
+	private String nickname;
+	private String cellphoneNum;
+	private String email;
 }

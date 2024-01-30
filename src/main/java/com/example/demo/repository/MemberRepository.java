@@ -24,6 +24,6 @@ public interface MemberRepository {
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
 
-	public Member getMember(String loginId);
+	public Member getMember(int id);
 
 }

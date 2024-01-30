@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Article {
-	int id;
-	String title;
-	String body;
+	private int id;
+	private String title;
+	private String body;
 }

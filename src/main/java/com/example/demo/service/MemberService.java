@@ -20,7 +20,7 @@ public class MemberService {
 		return memberRepository.getLastInsertId();
 	}
 
-	public Member getMember(String loginId) {
-		return memberRepository.getMember(loginId);
+	public Member getMember(int id) {
+		return memberRepository.getMember(id);
 	}
 }
