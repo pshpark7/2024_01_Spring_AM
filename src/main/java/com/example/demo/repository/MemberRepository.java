@@ -19,7 +19,7 @@ public interface MemberRepository {
 			nickname = #{nickname},
 			cellphoneNum = #{cellphoneNum}, email = #{email}
 			""")
-	public void doJoin(String loginId, String loginPw, String name, String nickname, int cellphoneNum, String email);
+	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
 	
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();

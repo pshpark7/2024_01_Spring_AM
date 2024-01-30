@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.repository.MemberRepository;
-import com.example.demo.vo.Article;
 import com.example.demo.vo.Member;
 
 @Service
@@ -16,7 +15,7 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public int doJoin(String loginId, String loginPw, String name, String nickname, int cellphoneNum, String email) {
+	public int doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 		return memberRepository.getLastInsertId();
 	}
