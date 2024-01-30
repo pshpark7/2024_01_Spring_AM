@@ -23,4 +23,12 @@ public class MemberService {
 	public Member getMember(int id) {
 		return memberRepository.getMember(id);
 	}
+	
+	public boolean loginIdConfirm(String loginId) {
+		int loginIdConfirm = memberRepository.loginIdConfirm(loginId);
+		if (loginIdConfirm == 1) {
+			return false;
+		}
+		return true;
+}
 }

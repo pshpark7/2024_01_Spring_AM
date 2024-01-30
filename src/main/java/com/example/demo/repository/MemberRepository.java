@@ -20,10 +20,16 @@ public interface MemberRepository {
 			cellphoneNum = #{cellphoneNum}, email = #{email}
 			""")
 	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
-	
+
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
 
 	public Member getMember(int id);
 
+	@Select("""
+			SELECT COUNT(*) > 0
+			FROM `member`
+			WHERE loginId = #{loginId}
+						""")
+	public int loginIdConfirm(String loginId);
 }
