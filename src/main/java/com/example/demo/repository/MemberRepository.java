@@ -8,6 +8,13 @@ import com.example.demo.vo.Member;
 
 @Mapper
 public interface MemberRepository {
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE loginId = #{loginId}
+			""")
+	public Member getMemberByLoginId(String loginId);
+
 	@Insert("""
 			INSERT INTO
 			`member` SET
@@ -17,19 +24,15 @@ public interface MemberRepository {
 			loginPw = #{loginPw},
 			`name` = #{name},
 			nickname = #{nickname},
-			cellphoneNum = #{cellphoneNum}, email = #{email}
+			cellphoneNum = #{cellphoneNum},
+			email = #{email}
 			""")
-	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
+	public void join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
 
+	@Select("SELECT * FROM `member` WHERE id = #{id}")
 	public Member getMember(int id);
 
-	@Select("""
-			SELECT COUNT(*) > 0
-			FROM `member`
-			WHERE loginId = #{loginId}
-						""")
-	public int loginIdConfirm(String loginId);
 }

@@ -15,20 +15,26 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public int doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+	public int join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+
+		Member existsMember = getMemberByLoginId(loginId);
+
+		if (existsMember != null) {
+			return -1;
+		}
+
+		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
+
 		return memberRepository.getLastInsertId();
+
+	}
+
+	private Member getMemberByLoginId(String loginId) {
+		return memberRepository.getMemberByLoginId(loginId);
 	}
 
 	public Member getMember(int id) {
 		return memberRepository.getMember(id);
 	}
-	
-	public boolean loginIdConfirm(String loginId) {
-		int loginIdConfirm = memberRepository.loginIdConfirm(loginId);
-		if (loginIdConfirm == 1) {
-			return false;
-		}
-		return true;
-}
+
 }
