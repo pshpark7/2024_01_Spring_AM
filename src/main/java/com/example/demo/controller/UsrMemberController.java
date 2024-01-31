@@ -18,6 +18,25 @@ public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@RequestMapping("/usr/member/doLogout")
+	@ResponseBody
+	public ResultData doLogout(HttpSession httpSession) {
+
+		boolean isLogined = false;
+
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+		}
+
+		if (isLogined == false) {
+			return ResultData.from("F-A", "이미 로그아웃 상태입니다");
+		}
+
+		httpSession.removeAttribute("loginedMemberId");
+
+		return ResultData.from("S-1", Ut.f("로그아웃 되었습니다"));
+	}
+
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData<Member> doLogin(HttpSession httpSession, String loginId, String loginPw) {
@@ -53,23 +72,21 @@ public class UsrMemberController {
 
 		return ResultData.from("S-1", Ut.f("%s님 환영합니다", member.getNickname()));
 	}
-	
-	@RequestMapping("/usr/member/doLogout")
-	@ResponseBody
-	public ResultData doLogout(HttpSession httpSession, String loginId, String loginPw) {
-		
-		if (httpSession.getAttribute("loginedMemberId") == null) {
-			return ResultData.from("F-1", "이미 로그아웃 상태입니다.");
-		}
-		httpSession.removeAttribute("loginedMemberId");
-
-		return ResultData.from("S-1", "로그아웃 성공");
-	}
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email) {
+	public ResultData<Member> doJoin(HttpSession httpSession, String loginId, String loginPw, String name,
+			String nickname, String cellphoneNum, String email) {
+		boolean isLogined = false;
+
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+		}
+
+		if (isLogined) {
+			return ResultData.from("F-A", "이미 로그인 상태입니다");
+		}
+
 		if (Ut.isNullOrEmpty(loginId)) {
 			return ResultData.from("F-1", "아이디를 입력해주세요");
 		}
@@ -97,6 +114,6 @@ public class UsrMemberController {
 
 		Member member = memberService.getMember(joinRd.getData1());
 
-		return ResultData.newData(joinRd, member);
+		return ResultData.newData(joinRd, "member", member);
 	}
 }
