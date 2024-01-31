@@ -35,13 +35,14 @@ public class MemberService {
 
 	}
 
+	public Member getMemberByLoginId(String loginId) {
+		return memberRepository.getMemberByLoginId(loginId);
+	}
+	
 	private Member getMemberByNameAndEmail(String name, String email) {
 		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
 
-	private Member getMemberByLoginId(String loginId) {
-		return memberRepository.getMemberByLoginId(loginId);
-	}
 
 	public Member getMember(int id) {
 		return memberRepository.getMember(id);
