@@ -61,7 +61,8 @@ public class UsrMemberController {
 		if (httpSession.getAttribute("loginedMemberId") == null) {
 			return ResultData.from("F-1", "이미 로그아웃 상태입니다.");
 		}
-		httpSession.invalidate();
+		httpSession.removeAttribute("loginedMemberId");
+
 		return ResultData.from("S-1", "로그아웃 성공");
 	}
 

@@ -27,24 +27,29 @@ CREATE TABLE `member`(
     delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
 # article TD 생성
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목1',
-`body` = '내용1';
+`body` = '내용1',
+memberId = 2;
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목2',
-`body` = '내용2';
+`body` = '내용2',
+memberId = 3;
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목3',
-`body` = '내용3';
+`body` = '내용3',
+memberId = 2;
 
 # member TD 생성
 INSERT INTO `member`
@@ -87,7 +92,16 @@ DESC `member`;
 SELECT *
 FROM article;
 
+
+SELECT *
+FROM article
+WHERE id = 2;
+
 SELECT *
 FROM `member`;
 
 SELECT LAST_INSERT_ID();
+
+SELECT COUNT(*) > 0
+FROM `member`
+WHERE loginId = 'admin';
