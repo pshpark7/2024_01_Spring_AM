@@ -10,13 +10,11 @@ import com.example.demo.util.Ut;
 import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
 
-import jakarta.servlet.http.HttpSession;
-
 @Controller
 public class UsrMemberController {
 
 	@Autowired
-	private MemberService memberService;;
+	private MemberService memberService;
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
@@ -41,20 +39,17 @@ public class UsrMemberController {
 			return ResultData.from("F-6", "이메일을 입력해주세요");
 		}
 
-		int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
+		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
-		if (id == -1) {
-			return ResultData.from("F-7", Ut.f("이미 사용중인 아이디(%s)입니다", loginId));
+		if (joinRd.isFail()) {
+			return joinRd;
 		}
 
-		if (id == -2) {
-			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
-		}
+		Member member = memberService.getMember((int) joinRd.getData1());
 
-		Member member = memberService.getMember(id);
-
-		return ResultData.from("S-1", Ut.f("%s 회원님, 가입되었습니다.", name), member);
+		return ResultData.newData(joinRd, member);
 	}
+
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
