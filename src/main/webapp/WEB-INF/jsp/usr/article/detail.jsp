@@ -9,22 +9,43 @@
 <body>
 	<h1>게시물 상세 페이지</h1>
 
-	<hr />
-	
-	<div>번호 : ${article.id }</div>
-	<div>작성일자 : ${article.regDate }</div>
-	<div>수정일자 : ${article.updateDate }</div>
-	<div>제목 : ${article.title }</div>
-	<div>내용 : ${article.body }</div>
-	<div>작성자 : ${article.nickname }</div>
+
+
+<hr />
+
+	<table border="1">
+		<thead class="mx-auto">
+			<tr>
+				<th>번호</th>
+				<th>작성일자</th>
+				<th>수정일자</th>
+				<th>제목</th>
+				<th>내용</th>
+				<th>작성자</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>${article.id }</td>
+
+				<td>${article.regDate.substring(0,10)}</td>
+
+				<td>${article.updateDate.substring(0,10) }</td>
+
+				<td>${article.title }</td>
+
+				<td>${article.body }</td>
+
+				<td>${article.nickname }</td>
+			</tr>
+
+		</tbody>
+	</table>
 
 	<div>
-		<a href="doDelte?id=${article.id}">삭제</a>
+		<a href="doDelete?id=${article.id}">삭제</a>
 		<a href="doModify?id=${article.id}">수정</a>
 	</div>
-
-
-
 
 
 </body>
