@@ -27,31 +27,34 @@ CREATE TABLE `member`(
     delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
-ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
 
 # article TD 생성
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목1',
-`body` = '내용1',
-memberId = 2;
+`body` = '내용1';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목2',
-`body` = '내용2',
-memberId = 3;
+`body` = '내용2';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목3',
-`body` = '내용3',
-memberId = 2;
+`body` = '내용3';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목4',
+`body` = '내용4';
 
 # member TD 생성
+# (관리자)
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -63,6 +66,7 @@ nickname = '관리자',
 cellphoneNum = '01012341234',
 email = 'abcd@gmail.com';
 
+# (일반)
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -73,6 +77,7 @@ nickname = '회원1',
 cellphoneNum = '01043214321',
 email = 'abcde@gmail.com';
 
+# (일반)
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -83,6 +88,60 @@ nickname = '회원2',
 cellphoneNum = '01056785678',
 email = 'abcdef@gmail.com';
 
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+UPDATE article
+SET memberId = 2
+WHERE id IN (1,2);
+
+UPDATE article
+SET memberId = 3
+WHERE id IN (3,4);
+
+
+# board 테이블 생성
+CREATE TABLE board(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), free(자유), QnA(질의응답) ...',
+    `name` CHAR(20) NOT NULL UNIQUE COMMENT '게시판 이름',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
+    delDate DATETIME COMMENT '삭제 날짜'
+);
+
+# board TD 생성
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'notice',
+`name` = '공지사항';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'free',
+`name` = '자유';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'qna',
+`name` = '질의응답';
+
+ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
+
+UPDATE article
+SET boardId = 1
+WHERE id IN (1,2);
+
+UPDATE article
+SET boardId = 2
+WHERE id = 3;
+
+UPDATE article
+SET boardId = 3
+WHERE id = 4;
 
 ###############################################
 
@@ -92,16 +151,10 @@ DESC `member`;
 SELECT *
 FROM article;
 
-
-SELECT *
-FROM article
-WHERE id = 2;
-
 SELECT *
 FROM `member`;
 
-SELECT LAST_INSERT_ID();
+SELECT *
+FROM `board`;
 
-SELECT COUNT(*) > 0
-FROM `member`
-WHERE loginId = 'admin';
+SELECT LAST_INSERT_ID();
