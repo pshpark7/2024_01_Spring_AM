@@ -50,16 +50,12 @@ public class UsrArticleController {
 
 		return "usr/article/list";
 	}
-	
+
 	@RequestMapping("/usr/article/write")
 	public String showJoin(HttpServletRequest req) {
 
-		Rq rq = (Rq) req.getAttribute("rq");
-
-
 		return "usr/article/write";
 	}
-
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
@@ -69,10 +65,9 @@ public class UsrArticleController {
 
 		if (Ut.isNullOrEmpty(title)) {
 			return Ut.jsHistoryBack("F-1", "제목을 입력해주세요");
-					
 		}
 		if (Ut.isNullOrEmpty(body)) {
-			return 	Ut.jsHistoryBack("F-2", "내용을 입력해주세요");
+			return Ut.jsHistoryBack("F-2", "내용을 입력해주세요");
 		}
 
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
@@ -81,8 +76,10 @@ public class UsrArticleController {
 
 		Article article = articleService.getArticle(id);
 
-		return Ut.jsReplace("S-1", Ut.f("%d번글이 작성되었습니다.",id), "list");
+		return Ut.jsReplace(writeArticleRd.getResultCode(), writeArticleRd.getMsg(), "../article/detail?id=" + id);
+
 	}
+
 	@RequestMapping("/usr/article/modify")
 	public String showModify(HttpServletRequest req, Model model, int id) {
 		Rq rq = (Rq) req.getAttribute("rq");
@@ -98,7 +95,6 @@ public class UsrArticleController {
 		return "usr/article/modify";
 	}
 
-	// 로그인 체크 -> 유무 체크 -> 권한 체크 -> 수정
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(HttpServletRequest req, int id, String title, String body) {
