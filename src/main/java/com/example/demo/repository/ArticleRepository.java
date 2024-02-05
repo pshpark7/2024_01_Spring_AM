@@ -48,6 +48,6 @@ public interface ArticleRepository {
 	public void modifyArticle(int id, String title, String body);
 
 //	@Select("SELECT * FROM article ORDER BY id DESC")
-	public List<Article> getArticles();
+	public List<Article> getArticles(int boardId);
 
 }

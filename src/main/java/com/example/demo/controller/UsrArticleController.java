@@ -41,7 +41,7 @@ public class UsrArticleController {
 
 		Board board = boardService.getBoardById(boardId);
 
-		List<Article> articles = articleService.getArticles();
+		List<Article> articles = articleService.getArticles(boardId);
 
 		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);

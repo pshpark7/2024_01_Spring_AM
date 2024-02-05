@@ -78,8 +78,8 @@ public class ArticleService {
 		return articleRepository.getArticle(id);
 	}
 
-	public List<Article> getArticles() {
-		return articleRepository.getArticles();
+	public List<Article> getArticles(int boardId) {
+		return articleRepository.getArticles(boardId);
 	}
 
 }

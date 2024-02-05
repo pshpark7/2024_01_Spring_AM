@@ -8,6 +8,9 @@
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
+		INNER JOIN `board` AS B
+		ON A.boardId = B.id
+		WHERE B.id = #{boardId}
 		ORDER BY A.id DESC
 	</select>
 
